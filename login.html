@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>simple-server login page</title>
+        <meta http-equiv="refresh" content="30">
+        <meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="main.css"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script type="text/javascript" src="login.js"></script>
+    </head>
+    <body onload="updateTable()">        
+        <div>
+            <h3>Sign Up</h3>
+                <form id="signupForm">
+			Username:<br>
+			<input type="text" name="usrname"/><br>
+			Password:<br>
+			<input type="password" name="passwd"/><br>
+			<input id="submit" type="submit" style="display:inline-block"/>
+		</form>		
+        </div>
+        <div>
+            <h3>Login</h3>
+		<form id="loginForm">
+			Username:<br>
+			<input type="text" name="usrname"/><br>
+			Password:<br>
+			<input type="password" name="passwd"/><br>
+			<input id="submit" type="submit" style="display:inline-block"/>
+		</form>		
+        </div>
+	<div>
+		<table align="center" id="userTable">
+		</table>
+		<button onclick="updateTable()">Update</button>
+	</div>
+        <br><a href="index.html">Return to homepage</a>
+    </body>
+</html>
