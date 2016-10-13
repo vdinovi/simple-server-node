@@ -1,5 +1,5 @@
 var express = require('express');
-var mysql = require('mysql');
+//var mysql = require('mysql');
 var bodyParser = require('body-parser');
 var crypto = require('crypto');
 
@@ -10,9 +10,13 @@ var db = require('./bin/db.js');
 var server = express();
 server.use(bodyParser.json());
 server.use(express.static('public'));
+// Connect to database
 var db = require('./bin/db.js');
 var dbconn = new db();
 
+// Routing modules should be hooked up here
+// server.use('/user', ...) for login & signup operations
+// server.use(
 
 
 
