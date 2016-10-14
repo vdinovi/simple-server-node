@@ -14,21 +14,11 @@ server.use(express.static('public'));
 var dbconn = new db();
 var usrAuth = new auth(dbconn);
 
+// User Auth
 server.use('/user', function(req, res, next) {
-    var info = {'username': 'usr2', 'password': 'pass'};
-    try {
-        switch (req.method) {
-        case 'GET':
-            usrAuth.getUser(req, res, info);
-            break;
-        case 'POST':
-            usrAuth.addUser(req, res, info);
-            break;
-        }
-    } catch(err) {
-        console.log(err);
-    }
-    next();
+    var info = req.body;
+    if (req.method == 'GET') usrAuth.getUser(req, res, info);
+    else if (req.method == 'POST') usrAuth.addUser(req, res, info);
 });
 
 server.listen(3030);
