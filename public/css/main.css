@@ -1,22 +1,30 @@
-html * {
-    font-family: Arial;
+body{
+    background-color:#1cbb9b;
 }
-
-div {
+.title{
+    background-color: #bcf5ea;
+    width:100%;
+    height: 60px;
+    border-radius: 3px;
+}
+.title .section {
     display: inline-block;
-    border: 1px solid black;
-    background-color: lightblue;
-    width: 200;
-
-    vertical-align: top;
-
+    width: 200px;
+    height:60px;
     text-align: center;
-}
-
-input {
-    border: 1px solid black;
-    display: block;
-    margin: 0 auto;
+    border-right: 2px solid #0d594a;
 }
 
 
+
+
+
+
+.footer {
+    background-color: #bcf5ea;
+    position: fixed;
+    width: 100%;
+    height: 20px;
+    bottom: 0px;
+    border-radius: 3px;
+}

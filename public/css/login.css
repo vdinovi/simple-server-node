@@ -1,0 +1,70 @@
+.box{
+    position:relative;
+    margin: 10px auto;
+    width: 500px;
+    height: 350px;
+    background-color:#fff;
+    padding: 10px;
+    border-radius: 3px;
+}
+.entry-type{
+    position: relative;
+    color: #00415d;
+    margin: 5px 5px 10px 5px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    height: 28px;
+}
+.entry-type a{
+    margin: 0 25px;
+    padding: 0 20px;
+    text-decoration: none:
+    color: #029f5b;
+    font-weight:bold;
+    font-size:15px;
+    opacity: 0.5;
+}
+.entry-type .active {
+    opacity: 1;
+}
+.login,.signup{
+    position: absolute;
+    float: left;
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+    text-align: center;
+}
+.form-field {
+    width:100%;
+    margin-bottom: 10px;
+}
+.form-field input[type="email"],
+.form-field input[type="text"],
+.form-field input[type="password"] {
+    width: calc(50% - 22px);
+    height: 45px;
+    outline: none;
+    border: 1px solid #ddd;
+    padding: 0 10px;
+    border-radius: 2px;
+    color: #333;
+    font-size: 0.8rem;
+}
+.form-field input:focus{
+    border-color: #358efb;
+}
+.form-field button {
+    width:45%;
+    background-color: #1CB94E;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 14px, 0;
+    border-radius: 2px;
+    text-transform:uppercase;
+}
+

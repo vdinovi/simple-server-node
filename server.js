@@ -14,7 +14,9 @@ server.use(express.static('public'));
 var dbconn = new db();
 var usrAuth = new auth(dbconn);
 
-// User Auth
+// User Auth:
+//  - GET(uid) -> retreive user info from database
+//  - POST(username, password) -> create new user
 server.use('/user', function(req, res, next) {
     var info = req.body;
     if (req.method == 'GET') usrAuth.getUser(req, res, info);

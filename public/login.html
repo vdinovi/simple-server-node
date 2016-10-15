@@ -4,36 +4,53 @@
         <title>simple-server login page</title>
         <meta http-equiv="refresh" content="30">
         <meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="css/main.css"/>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/login.css"/>
+        <link rel="stylesheet" type="text/css" href="css/main.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script type="text/javascript" src="js/login.js"></script>
     </head>
-    <body onload="updateTable()">        
-        <div>
-            <h3>Sign Up</h3>
-                <form id="signupForm">
-			Username:<br>
-			<input type="text" name="usrname"/><br>
-			Password:<br>
-			<input type="password" name="passwd"/><br>
-			<input id="submit" type="submit" style="display:inline-block"/>
-		</form>		
+    <body>
+        <div class="title">
+            <div class="section">
+                <p>Simple Server</p>
+            </div>
         </div>
-        <div>
-            <h3>Login</h3>
-		<form id="loginForm">
-			Username:<br>
-			<input type="text" name="usrname"/><br>
-			Password:<br>
-			<input type="password" name="passwd"/><br>
-			<input id="submit" type="submit" style="display:inline-block"/>
-		</form>		
+        <div class="box">
+            <div class="entry-type">
+                <a href="#" class="active" id="login-box-link">Login</a>
+                <a href="#" class="active" id="signup-box-link">Signup</a>
+            </div>
+            <form class="login" id="login-form">
+                <div class="form-field" id="username">
+                    <input type="text" name="username" placeholder="Username"/>
+                </div>
+                <div class="form-field" id="password">
+                    <input type="password" placeholder="Password"/><br>
+                </div>
+                <div class="form-field" id="submit">
+                    <button onclick="loginEvent()">log in</button>
+                </div>
+            </form>		
+            <form class="signup" id="signup-form">
+                <div class="form-field" id="email">
+                    <input type="email" placeholder="Email"/>
+                </div>
+                <div class="form-field" id="username"> 
+                    <input type="text" placeholder="Username"/>
+                </div>
+                <div class="form-field" id="password">
+                    <input type="password" placeholder="Password"/><br>
+                </div>
+                <div class="form-field" id="confirm-password">
+                    <input type="password" placeholder="Confirm Password"/><br>
+                </div>
+                <div class="form-field" id="submit">
+                    <button onclick="signupEvent()">sign up</button>
+                </div>
+            </form>
+            </div>
+        <div class="footer" id="footer">
+            <a href="index.html">Return to homepage</a>
         </div>
-	<div>
-		<table align="center" id="userTable">
-		</table>
-		<button onclick="updateTable()">Update</button>
-	</div>
-        <br><a href="index.html">Return to homepage</a>
     </body>
 </html>

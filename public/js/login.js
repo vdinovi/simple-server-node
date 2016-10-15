@@ -1,54 +1,53 @@
-function updateTable() {
-    var table = "<tr><th><u>Online Users</u></th></tr>";
-    $.ajax({
-        type:"GET",
-        url:'cgi-bin/update.php',
-        dataType:'json',
-        success: function(obj) {
-            for (var key in obj) {
-                table += "<tr font-weight:><th>"+obj[key]+"</th><th>";
-            }
-            $("#userTable").html(table); 
-        }
-    });
-}
-
-$(document).ready(function() {
-    // login 
-    $("#loginForm").submit(function(e) { 
+function loginEvent() {
+    $("#login-form").submit(function(e) { 
         $.ajax({
-            type: 'post',
-            url: 'cgi-bin/login.php',
-            data: $("#loginForm").serialize(),
+            type: "POST",
+            url: "http://localhost:3030/user/login",
+            dataType: "application/json",
+            data: JSON.stringify($("#loginForm").serializeArray()),
             success: function(data) {
-                $UID = data['UID'];
-                alert(data['msg']);
-                updateTable();
+                console.log(data);
             },
             error: function(data) {
-                alert(data.responseJSON['msg']);
+                console.log(data);
             }
         });
         e.preventDefault();
     });
-});
+};
 
-$(document).ready(function() {
-    // signup
-    $("#signupForm").submit(function(e) { 
+function signupEvent() {
+    $("#signup-form").submit(function(e) { 
         $.ajax({
-            type: 'post',
-            url: 'cgi-bin/signup.php',
-            data: $("#signupForm").serialize(),
+            type: "POST",
+            url: "http://localhost:3030/user",
+            dataType: "application/json",
+            data: JSON.stringify($("#loginForm").serializeArray()),
             success: function(data) {
-                alert(data['msg']);
-                updateTable();
+                console.log(data);
             },
             error: function(data) {
-                alert(data.responseJSON['msg']);
+                console.log(data);
             }
         });
         e.preventDefault();
+    });
+};
+
+$(document).ready(function() {
+    $(".signup").hide();
+
+    $("#signup-box-link").click(function() {
+        $(".login").fadeOut(100);
+        $(".signup").delay(100).fadeIn(100);
+        $("#login-box-link").removeClass("active");
+        $("#signup-box-link").addClass("active");
+    });
+    $("#login-box-link").click(function() {
+        $(".signup").fadeOut(100);
+        $(".login").delay(100).fadeIn(100);
+        $("#signup-box-link").removeClass("active");
+        $("#login-box-link").addClass("active");
     });
 });
 
