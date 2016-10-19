@@ -5,22 +5,33 @@ var crypto = require('crypto');
 // Custom modules
 var db = require('./bin/db.js');
 var auth = require('./bin/auth.js');
+var jsonParser = bodyParser.json()
 
 // Setup and config server
 var server = express();
-server.use(bodyParser.json());
 server.use(express.static('public'));
 
 var dbconn = new db();
 var usrAuth = new auth(dbconn);
 
 // User Auth:
-//  - GET(uid) -> retreive user info from database
-//  - POST(username, password) -> create new user
-server.use('/user', function(req, res, next) {
+//  - /login  POST(username, password) -> Authenticate user
+//  - /signup POST(email, username, password, confirm-pass) -> Create new user
+//  - TODO:/user   GET(username | UID) -> retreive public user information 
+server.use('/user', jsonParser, function(req, res, next) {
     var info = req.body;
-    if (req.method == 'GET') usrAuth.getUser(req, res, info);
-    else if (req.method == 'POST') usrAuth.addUser(req, res, info);
+    switch (req.path) {
+    case '/login':
+        if (req.method == 'POST') usrAuth.login(req, res, info);
+        break;
+    case '/signup':
+        if (req.method == 'POST') usrAuth.addUser(req, res, info);
+        break;
+    default:
+        res.writeHead(400);
+        res.send();
+        break;
+    }
 });
 
 server.listen(3030);

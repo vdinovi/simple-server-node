@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>simple-server login page</title>
-        <meta http-equiv="refresh" content="30">
+        <meta http-equiv="refresh" content="60">
         <meta charset="UTF-8">
         <link rel="stylesheet" type="text/css" href="css/login.css"/>
         <link rel="stylesheet" type="text/css" href="css/main.css"/>
@@ -12,7 +12,24 @@
     <body>
         <div class="title">
             <div class="section">
-                <p>Simple Server</p>
+                <div class="main-menu">
+                    <a href="index.html">Simple Server</a>
+                </div>
+            </div>
+            <div class="section">
+                <div class="item">
+                    <a href="login.html">Login</a>
+                </div>
+            </div>
+            <div class="section">
+                <div class="item">
+                    <a href="chat.html">Chat</a>
+                </div>
+            </div>
+            <div class="section">
+                <div class="item">
+                    <a href="profile.html">Profile</a>
+                </div>
             </div>
         </div>
         <div class="box">
@@ -21,28 +38,28 @@
                 <a href="#" class="active" id="signup-box-link">Signup</a>
             </div>
             <form class="login" id="login-form">
-                <div class="form-field" id="username">
+                <div class="form-field">
                     <input type="text" name="username" placeholder="Username"/>
                 </div>
-                <div class="form-field" id="password">
-                    <input type="password" placeholder="Password"/><br>
+                <div class="form-field">
+                    <input type="password" name="password" placeholder="Password"/>
                 </div>
                 <div class="form-field" id="submit">
                     <button onclick="loginEvent()">log in</button>
                 </div>
             </form>		
             <form class="signup" id="signup-form">
-                <div class="form-field" id="email">
-                    <input type="email" placeholder="Email"/>
+                <div class="form-field">
+                    <input type="email" name="email" placeholder="Email"/>
                 </div>
-                <div class="form-field" id="username"> 
-                    <input type="text" placeholder="Username"/>
+                <div class="form-field"> 
+                    <input type="text" name="username" placeholder="Username"/>
                 </div>
-                <div class="form-field" id="password">
-                    <input type="password" placeholder="Password"/><br>
+                <div class="form-field">
+                    <input type="password" name="password" placeholder="Password"/><br>
                 </div>
-                <div class="form-field" id="confirm-password">
-                    <input type="password" placeholder="Confirm Password"/><br>
+                <div class="form-field">
+                    <input type="password" name="confirmPass" placeholder="Confirm Password"/><br>
                 </div>
                 <div class="form-field" id="submit">
                     <button onclick="signupEvent()">sign up</button>

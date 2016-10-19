@@ -4,15 +4,47 @@ var auth = function(db) {
     this.db = db;
 };
 
-// Adds user to database
-//  - Hashes a unique user ID as hex-str of length 10.
-//  - TODO: Should be POST(usrname, pass, info...)
-//  - TODO: Currently only checks that username and password are not null.
-//          Decide on more effective constraints.
-auth.prototype.addUser = function(req, res, info) {
+auth.prototype.login = function(req, res, info) {
     if (!info.username || !info.password) {
         res.writeHead(400, "Invalid username or password");
         res.send();
+        return;
+    }
+    this.db.query(
+        "SELECT * FROM usr_auth WHERE username = '"+info.username+"';",
+        function(err, rows, fields) {
+            if (err) {
+                console.log(err);
+                res.statusCode = 500;
+            }
+            else if (rows.length == 0) {
+                res.writeHead(404, "User not found");
+            }
+            else {
+                if (rows[0].password == info.password) {
+                    res.writeHead(200, {"Content-Type": "application/json"});
+                    // TODO: replace with cookie and create session
+                    res.write(JSON.stringify({uid: rows[0].uid}));
+                }
+                else {
+                    res.writeHead(400, "Invalid username or password");
+                }
+            }
+            res.send();
+        });
+
+};
+
+// Adds user to database
+//  - Hashes a unique user ID as hex-str of length 10.
+//  - TODO: Currently only checks that username and password are not null.
+//          Decide on more effective constraints.
+auth.prototype.addUser = function(req, res, info) {
+    if (!info || !info.email || !info.username || !info.password
+        || !info.confirmPass || info.password != info.confirmPass) {
+        res.writeHead(400, "Invalid username or password");
+        res.send();
+        return;
     }
     var md5hash = crypto.createHash('md5');
     md5hash.update(info.username);
@@ -45,6 +77,7 @@ auth.prototype.addUser = function(req, res, info) {
 auth.prototype.getUser = function(req, res, info) {
     this.db.query("SELECT * FROM usr_auth WHERE uid = '"+info.uid+"';",
             function(err, rows, fields) {
+                console.log(rows);
                 if (err) {
                     console.log(err);
                     res.statusCode = 500;

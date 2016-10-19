@@ -1,10 +1,14 @@
 function loginEvent() {
     $("#login-form").submit(function(e) { 
+        var info = {
+            "username": $("#login-form :input[name='username']").val(),
+            "password": $("#login-form :input[name='password']").val()
+        };
         $.ajax({
             type: "POST",
             url: "http://localhost:3030/user/login",
-            dataType: "application/json",
-            data: JSON.stringify($("#loginForm").serializeArray()),
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(info),
             success: function(data) {
                 console.log(data);
             },
@@ -18,11 +22,17 @@ function loginEvent() {
 
 function signupEvent() {
     $("#signup-form").submit(function(e) { 
+        var info = {            
+            "email": $("#signup-form :input[name='email']").val(),
+            "username": $("#signup-form :input[name='username']").val(),
+            "password": $("#signup-form :input[name='password']").val(),
+            "confirmPass": $("#signup-form :input[name='confirmPass']").val()
+        };
         $.ajax({
             type: "POST",
-            url: "http://localhost:3030/user",
-            dataType: "application/json",
-            data: JSON.stringify($("#loginForm").serializeArray()),
+            url: "http://localhost:3030/user/signup",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(info),
             success: function(data) {
                 console.log(data);
             },
