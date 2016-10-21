@@ -6,11 +6,21 @@ var auth = function(db, sessionMap) {
     this.sessionMap = sessionMap;
 };
 
-// Set 5 minute expire time for any session token created
+// Set 5 minute expire time for any session created
 auth.prototype.setExpire = function(token) {
     var session = this.sessionMap[token];
     if (session) 
         setTimeout(session.expire, 300000, session);
+};
+
+// Resolve token to session
+// - If session has not expired, server may operate on assocaited UID
+auth.prototype.validateToken = function(token) {
+    var session = this.sessionMap[token];
+    if (session && !session.expired) {
+        return true;
+    }
+    return false;
 };
 
 auth.prototype.login = function(req, res, info) {
@@ -53,7 +63,7 @@ auth.prototype.login = function(req, res, info) {
 
 // Adds user to database
 //  - Hashes a unique user ID as hex-str of length 10.
-//  - TODO: Currently only checks that username and password are not null.
+//  - TODO: Currently only checks that username, email and password are not null.
 //          Decide on more effective constraints.
 auth.prototype.addUser = function(req, res, info) {
     if (!info || !info.email || !info.username || !info.password
@@ -67,6 +77,7 @@ auth.prototype.addUser = function(req, res, info) {
     var uid = md5hash.digest('hex').substr(0, 10);
     this.db.query("INSERT INTO usr_auth VALUES('"
             + info.username + "', '"
+            + info.email + "', '"
             + info.password + "', '"
             + uid + "');",
             function(err, rows, fields) {
