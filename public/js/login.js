@@ -9,11 +9,13 @@ function loginEvent() {
             url: "http://localhost:3030/user/login",
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(info),
-            success: function(data) {
-                console.log(data);
+            withCredentials: true,
+            success: function(data, status, xhr) {
+                // Session token
+                document.cookie = xhr.getResponseHeader('Token');
             },
-            error: function(data) {
-                console.log(data);
+            error: function(err) {
+                console.log(err);
             }
         });
         e.preventDefault();

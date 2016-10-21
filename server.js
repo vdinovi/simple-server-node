@@ -12,8 +12,7 @@ var server = express();
 server.use(express.static('public'));
 
 var sessionMap = {};
-var dbconn = new db();
-var usrAuth = new auth(dbconn, sessionMap);
+var usrAuth = new auth(new db(), sessionMap);
 
 // User Auth:
 //  - /login  POST(username, password) -> Authenticate user

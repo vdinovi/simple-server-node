@@ -35,9 +35,11 @@ auth.prototype.login = function(req, res, info) {
                     var token = crypto.randomBytes(20).toString('hex');
                     self.sessionMap[token] = new session(token, uid);
                     self.setExpire(token);
+                    // Setting a cookie header results in difficult to obtain
+                    // header when parsing xhr response- using 'token' instead
                     res.writeHead(200, {
                         "Content-Type": "text/plain",
-                        "Set-Cookie": "token="+token
+                        "Token": token
                     });
                 }
                 else {
