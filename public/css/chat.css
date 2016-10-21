@@ -1,4 +1,4 @@
-div {
+.chat-div {
     width: 500px;
     height: 400px;
 
@@ -22,10 +22,4 @@ input {
     height:100%;
     text-align: right;
 }
-
-
-#inputDiv {
-    height: 25px;
-}
-
 

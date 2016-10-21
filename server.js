@@ -17,10 +17,14 @@ var usrAuth = new auth(dbconn);
 // User Auth:
 //  - /login  POST(username, password) -> Authenticate user
 //  - /signup POST(email, username, password, confirm-pass) -> Create new user
-//  - TODO:/user   GET(username | UID) -> retreive public user information 
+//  - /user   GET(UID || username) -> retreive public user information 
 server.use('/user', jsonParser, function(req, res, next) {
     var info = req.body;
     switch (req.path) {
+    case '/':
+        if (req.method == 'GET') usrAuth.getUser(req, res,
+             {id: req.query.id, username: req.query.username});
+        break;
     case '/login':
         if (req.method == 'POST') usrAuth.login(req, res, info);
         break;

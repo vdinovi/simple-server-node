@@ -14,8 +14,7 @@ auth.prototype.login = function(req, res, info) {
         "SELECT * FROM usr_auth WHERE username = '"+info.username+"';",
         function(err, rows, fields) {
             if (err) {
-                console.log(err);
-                res.statusCode = 500;
+                res.writeHead(500);
             }
             else if (rows.length == 0) {
                 res.writeHead(404, "User not found");
@@ -61,7 +60,7 @@ auth.prototype.addUser = function(req, res, info) {
                     }
                     // Server error;
                     else {
-                        res.statusCode = 500;
+                        res.writeHead(500);
                     }
                 }
                 else {
@@ -72,25 +71,37 @@ auth.prototype.addUser = function(req, res, info) {
             });
 };
 
-// Retreive user by UID
-// TODO: Fetch usr_info data, currently fetches username
+// Retreive user by UID or username
 auth.prototype.getUser = function(req, res, info) {
-    this.db.query("SELECT * FROM usr_auth WHERE uid = '"+info.uid+"';",
-            function(err, rows, fields) {
-                console.log(rows);
-                if (err) {
-                    console.log(err);
-                    res.statusCode = 500;
-                }
-                else if (rows.length == 0) {
-                    res.writeHead(404, "User not found");
-                }
-                else {
-                    res.writeHead(200, {"Content-Type": "application/json"});
-                    res.write('User: ' + rows[0].username);
-                }
-                res.send();
-            });
+    if (info.id) {
+        var str = "SELECT * FROM usr_auth WHERE uid = '"+id+"';";
+                   + info.id + "';";
+    }
+    else if (info.username) { 
+        var str = "SELECT * FROM usr_auth WHERE username = '"
+                   + info.username + "';";
+    }
+    else {
+        res.writeHead(400);
+        res.send();
+        return;
+    }
+    this.db.query(str,
+        function(err, rows, fields) {
+            if (err) {
+                console.log(err);
+                res.writeHead(500);
+            }
+            else if (rows.length == 0) {
+                res.writeHead(404, "User not found");
+                res.write('User not found');
+            }
+            else {
+                res.writeHead(200, {"Content-Type": "application/json"});
+                res.write('User: ' + rows[0].username);
+            }
+            res.send();
+        });
 };
 
 module.exports = auth;

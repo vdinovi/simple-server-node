@@ -24,6 +24,7 @@ body{
     margin: 0 auto;
 }
 .item {
+    background: #f7aea1;
     border: 1px solid black;
     font-family: Arial black;
     text-align: center;
