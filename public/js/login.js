@@ -11,7 +11,6 @@ function loginEvent() {
             data: JSON.stringify(info),
             withCredentials: true,
             success: function(data, status, xhr) {
-                // Session token
                 document.cookie = xhr.getResponseHeader('Token');
             },
             error: function(err) {
