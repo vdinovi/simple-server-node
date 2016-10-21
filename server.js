@@ -1,18 +1,19 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var crypto = require('crypto');
 
 // Custom modules
 var db = require('./bin/db.js');
 var auth = require('./bin/auth.js');
+var session = require('./bin/session.js');
 var jsonParser = bodyParser.json()
 
 // Setup and config server
 var server = express();
 server.use(express.static('public'));
 
+var sessionMap = {};
 var dbconn = new db();
-var usrAuth = new auth(dbconn);
+var usrAuth = new auth(dbconn, sessionMap);
 
 // User Auth:
 //  - /login  POST(username, password) -> Authenticate user
@@ -22,6 +23,7 @@ server.use('/user', jsonParser, function(req, res, next) {
     var info = req.body;
     switch (req.path) {
     case '/':
+        console.log(sessionMap);
         if (req.method == 'GET') usrAuth.getUser(req, res,
              {id: req.query.id, username: req.query.username});
         break;

@@ -1,7 +1,16 @@
 var crypto = require('crypto');
+var session = require('./session.js');
 
-var auth = function(db) {
+var auth = function(db, sessionMap) {
     this.db = db;
+    this.sessionMap = sessionMap;
+};
+
+// Set 5 minute expire time for any session token created
+auth.prototype.setExpire = function(token) {
+    var session = this.sessionMap[token];
+    if (session) 
+        setTimeout(session.expire, 300000, session);
 };
 
 auth.prototype.login = function(req, res, info) {
@@ -10,6 +19,7 @@ auth.prototype.login = function(req, res, info) {
         res.send();
         return;
     }
+    var self = this;
     this.db.query(
         "SELECT * FROM usr_auth WHERE username = '"+info.username+"';",
         function(err, rows, fields) {
@@ -21,9 +31,14 @@ auth.prototype.login = function(req, res, info) {
             }
             else {
                 if (rows[0].password == info.password) {
-                    res.writeHead(200, {"Content-Type": "application/json"});
-                    // TODO: replace with cookie and create session
-                    res.write(JSON.stringify({uid: rows[0].uid}));
+                    var uid = rows[0].uid;
+                    var token = crypto.randomBytes(20).toString('hex');
+                    self.sessionMap[token] = new session(token, uid);
+                    self.setExpire(token);
+                    res.writeHead(200, {
+                        "Content-Type": "text/plain",
+                        "Set-Cookie": "token="+token
+                    });
                 }
                 else {
                     res.writeHead(400, "Invalid username or password");
