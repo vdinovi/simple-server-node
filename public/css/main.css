@@ -3,8 +3,10 @@ body{
 }
 
 .title{
-    width:100%;
+    width:1000px;
     height: 60px;
+    overflow-x: auto;
+    overflow-y: hidden;
     border-radius: 3px;
 }
 .section {

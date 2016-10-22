@@ -45,7 +45,7 @@
                 <a href="#" class="active" id="login-box-link">Login</a>
                 <a href="#" class="active" id="signup-box-link">Signup</a>
             </div>
-            <form class="login" id="login-form">
+            <form class="login" id="login-form" action="#" method="POST">
                 <div class="form-field">
                     <input type="text" name="username" placeholder="Username"/>
                 </div>
@@ -53,10 +53,10 @@
                     <input type="password" name="password" placeholder="Password"/>
                 </div>
                 <div class="form-field" id="submit">
-                    <button onclick="loginEvent()">log in</button>
+                    <button>Submit</button>
                 </div>
             </form>		
-            <form class="signup" id="signup-form">
+            <form class="signup" id="signup-form" action="#" method="POST">
                 <div class="form-field">
                     <input type="email" name="email" placeholder="Email"/>
                 </div>
@@ -70,7 +70,7 @@
                     <input type="password" name="confirmPass" placeholder="Confirm Password"/><br>
                 </div>
                 <div class="form-field" id="submit">
-                    <button onclick="signupEvent()">sign up</button>
+                    <button>Submit</button>
                 </div>
             </form>
         </div>

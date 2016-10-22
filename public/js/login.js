@@ -1,5 +1,6 @@
-function loginEvent() {
+$(document).ready(function() {
     $("#login-form").submit(function(e) { 
+        e.preventDefault();
         var info = {
             "username": $("#login-form :input[name='username']").val(),
             "password": $("#login-form :input[name='password']").val()
@@ -7,22 +8,19 @@ function loginEvent() {
         $.ajax({
             type: "POST",
             url: "http://localhost:3030/user/login",
-            contentType: 'application/json; charset=utf-8',
+            contentType: "application/json; charset=utf-8",
             data: JSON.stringify(info),
-            withCredentials: true,
             success: function(data, status, xhr) {
                 document.cookie = xhr.getResponseHeader('Token');
             },
-            error: function(err) {
+            error: function(err, status, xhr) {
                 console.log(err);
             }
         });
-        e.preventDefault();
     });
-};
 
-function signupEvent() {
     $("#signup-form").submit(function(e) { 
+        e.preventDefault();
         var info = {            
             "email": $("#signup-form :input[name='email']").val(),
             "username": $("#signup-form :input[name='username']").val(),
@@ -32,7 +30,7 @@ function signupEvent() {
         $.ajax({
             type: "POST",
             url: "http://localhost:3030/user/signup",
-            contentType: 'application/json; charset=utf-8',
+            contentType: "application/json; charset=utf-8",
             data: JSON.stringify(info),
             success: function(data) {
                 console.log(data);
@@ -41,11 +39,8 @@ function signupEvent() {
                 console.log(data);
             }
         });
-        e.preventDefault();
     });
-};
 
-$(document).ready(function() {
     $(".signup").hide();
 
     $("#signup-box-link").click(function() {

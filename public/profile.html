@@ -1,5 +1,62 @@
 <html>
-    <body>
-        <p>Profile</p>
+    <head>
+        <title>profile</title>
+        <link rel="stylesheet" type="text/css" href="css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="css/profile.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script type="text/javascript">
+            function renderProfile() {
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:3030/profile",
+                    contentType: "text/html",
+                    data: {token: document.cookie},
+                    success: function(data, status, xhr) {
+                        console.log(data);
+                        $("#target").html(data); 
+                    },
+                    error: function(err, status, xhr) {
+                        console.log(err);
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body onload="renderProfile()">
+    <div class="title">
+        <div class="section">
+            <a href="index.html">
+                <div class="main-menu">
+                    <p>Simple Server</p>
+                </div>
+            </a>
+        </div>
+        <div class="section">
+            <a href="login.html">
+                <div class="item">
+                    <p>Login</p>
+                </div>
+            </a>
+        </div>
+        <div class="section">
+            <a href="chat.html">
+                <div class="item">
+                    <p>Chat</p>
+                </div>
+            </a>
+        </div>
+        <div class="section">
+            <a href="profile.html">
+                <div class="item">
+                    <p>Profile</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div id="target" class="user-pane">
+        <p>Loading...</p>
+    </div>
+    <div class="footer">
+    </div>
     </body>
 </html>

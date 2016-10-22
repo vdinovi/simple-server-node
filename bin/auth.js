@@ -36,7 +36,7 @@ auth.prototype.login = function(req, res, info) {
             if (err) {
                 res.writeHead(500);
             }
-            else if (rows.length == 0) {
+            else if (rows.length[0] == 0) {
                 res.writeHead(404, "User not found");
             }
             else {

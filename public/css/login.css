@@ -1,9 +1,9 @@
 .box{
     position:relative;
-    margin: 10px auto;
+    margin: 10px;
     width: 500px;
     height: 350px;
-    background-color:#fff;
+    background: #b3ffd9;
     padding: 10px;
     border-radius: 3px;
 }
@@ -12,7 +12,7 @@
     color: #00415d;
     margin: 5px 5px 10px 5px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid black;
     text-align: center;
     height: 28px;
 }

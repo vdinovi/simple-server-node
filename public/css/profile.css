@@ -1,0 +1,43 @@
+.user-pane {
+    width: 500px;
+    height: 400px;
+    background: #b3ffd9;
+    border: 1px solid black;
+    display: inline-block;
+    margin: 10px;
+}
+
+.user-pic {
+    display: inline-block;
+    height: 20%;
+    width: 20%;
+    margin: 3;
+    border: 1px solid black;
+    border-radius: 3px;
+    background: #eee;
+    vertical-align: top;
+}
+
+#prof-pic {
+    width: 100%;
+    height: 100%;
+}
+
+.primary-info {
+    display: inline-block;
+    margin: 2 auto;
+    border-radius: 3px;
+    vertical-align: top;
+    text-align: center;
+    
+    height: 20%;
+    width: 75%;
+}
+p.primary-info {
+    display:inline-block;
+}
+
+table {
+    
+
+}

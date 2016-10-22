@@ -4,11 +4,12 @@ var mysql = require('mysql');
 /********************************************************
  * USR_AUTH:
  *  - username(vc[20]): PK for this table
+ *  - email(vc[20]): associated email
  *  - password(vc[20]): for validation
  *  - uid(c[10]): Hashed 10-char TODO:hex value used as FK
  *                for other user related tables
  *
- * USR_INFO:
+ * USR_INFO(REMOVE?):
  *  - uid(c[10]): PK 10-char TODO:hex value for this table
  *  - name(vc[20]): Real user name
  *  - email(vc[20]): User email

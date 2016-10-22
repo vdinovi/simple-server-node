@@ -4,25 +4,43 @@ var bodyParser = require('body-parser');
 // Custom modules
 var db = require('./bin/db.js');
 var auth = require('./bin/auth.js');
-var session = require('./bin/session.js');
-var jsonParser = bodyParser.json()
+var profile = require('./bin/profile.js');
 
 // Setup and config server
 var server = express();
 server.use(express.static('public'));
-
+var jsonParser = bodyParser.json()
 var sessionMap = {};
-var usrAuth = new auth(new db(), sessionMap);
+var dbConn = new db();
+var usrAuth = new auth(dbConn, sessionMap);
+var profile = new profile(dbConn, sessionMap);
+
+
+// User Profile:
+// - /profile GET(token) -> Render user profile
+// TODO:- /profile POST(token) -> Edit user profile?
+server.use('/profile', jsonParser, function(req, res, next) {
+    console.log(sessionMap);
+    switch (req.path) {
+    case '/':
+        if (req.method == 'GET') profile.render(req, res, usrAuth);
+        break;
+    default:
+        res.writeHead(400);
+        res.send();
+        break;
+    }
+});
 
 // User Auth:
 //  - /login  POST(username, password) -> Authenticate user
 //  - /signup POST(email, username, password, confirm-pass) -> Create new user
-//  - /user   GET(UID || username) -> retreive public user information 
+//  - /   GET(UID || username) -> retreive public user information 
 server.use('/user', jsonParser, function(req, res, next) {
     var info = req.body;
+    console.log(sessionMap);
     switch (req.path) {
     case '/':
-        console.log(sessionMap);
         if (req.method == 'GET') usrAuth.getUser(req, res,
              {id: req.query.id, username: req.query.username});
         break;
