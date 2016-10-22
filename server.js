@@ -19,7 +19,7 @@ var sessionMap = {};
 var db = new dbModule();
 var auth = new authModule(db, sessionMap);
 var profile = new profileModule(db, sessionMap);
-var chat = new chatModule(server, auth);
+var chat = new chatModule(server, sessionMap);
 
 // User Profile:
 // - /profile GET(token) -> Render user profile
