@@ -12,11 +12,13 @@
                     contentType: "text/html",
                     data: {token: document.cookie},
                     success: function(data, status, xhr) {
-                        console.log(data);
                         $("#target").html(data); 
                     },
                     error: function(err, status, xhr) {
-                        console.log(err);
+                        if (err.status == 400)
+                            alert("Bad token. Re-authenticate to resolve");
+                        else
+                            $("#target").html("Failure to load");
                     }
                 });
             }

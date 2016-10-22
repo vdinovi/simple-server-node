@@ -2,7 +2,9 @@
     <head>
         <link rel="stylesheet" type="text/css" href="css/main.css"/>
         <link rel="stylesheet" type="text/css" href="css/chat.css"/>
-        <meta http-equiv="refresh" content="5">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script type="text/javascript" src="js/chat.js"></script>
+        <meta http-equiv="refresh" content="30">
     </head>
     <body>
         <div class="title">
@@ -36,12 +38,14 @@
             </div>
         </div>
         <div class="chat-div">
-            <textarea id="chatWindowBox" readonly></textarea>
+            <textarea id="chat-window-box" readonly></textarea>
         </div>
         <div class="chat-div" style="height: 25px">
-            <form action="#">
-                <input id="inputText" name="data"/>
-                <button>Send</button>
+            <form id="input-form" action="#">
+                <input class="input" id="input-text" name="data"/>
+                <div class="input" id="input-button-box">
+                    <button id="send">Send</button>
+                </div>
             </form>
         </div>
         <div class="footer">

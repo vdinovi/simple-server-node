@@ -23,7 +23,6 @@ profile.prototype.validateToken = function(token, res) {
 };
 
 profile.prototype.render = function(req, res) {
-    //var token = req.headers.token;
     var token = req.query.token;
     var session = null;
     if (session = this.validateToken(token, res)) {

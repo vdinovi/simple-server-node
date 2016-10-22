@@ -31,6 +31,18 @@ server.use('/profile', jsonParser, function(req, res, next) {
     }
 });
 
+var messages = "";
+
+// Chat Handler
+server.use('/chat', jsonParser, function(req, res, next) {
+    if (req.method == 'POST') {
+        var data = messages+'\n'+req.body.message;
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.write(data);
+    }
+    res.send();
+});
+
 // User Auth:
 //  - /login  POST(username, password) -> Authenticate user
 //  - /signup POST(email, username, password, confirm-pass) -> Create new user

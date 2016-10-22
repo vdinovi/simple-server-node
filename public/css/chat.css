@@ -16,10 +16,22 @@ textarea {
     text-align: right;
 }
 
-input {
-    width:80%;
+.input {
     display: inline;
     height:100%;
     text-align: right;
+}
+
+#input-text {
+    width: 80%;
+}
+
+
+#input-button-box {
+    width: 20%;
+}
+
+#send {
+    width: 19%;
 }
 
