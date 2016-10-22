@@ -11,6 +11,7 @@ $(document).ready(function() {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(info),
             success: function(data, status, xhr) {
+                alert("Login successful");
                 document.cookie = xhr.getResponseHeader('Token');
             },
             error: function(err, status, xhr) {
@@ -33,6 +34,7 @@ $(document).ready(function() {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(info),
             success: function(data) {
+                alert("Account created");
                 console.log(data);
             },
             error: function(data) {

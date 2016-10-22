@@ -9,7 +9,6 @@ var profile = function(db, sessionMap) {
 // Resolve token to session
 profile.prototype.validateToken = function(token, res) {
     var session = this.sessionMap[token];
-    console.log(session);
     if (!session) {
         res.writeHead(400, "Bad token");
     } 
@@ -26,7 +25,6 @@ profile.prototype.validateToken = function(token, res) {
 profile.prototype.render = function(req, res) {
     //var token = req.headers.token;
     var token = req.query.token;
-    console.log(token);
     var session = null;
     if (session = this.validateToken(token, res)) {
         var str = "SELECT * FROM usr_auth WHERE uid = '"+session.uid+"';";
@@ -35,7 +33,10 @@ profile.prototype.render = function(req, res) {
                 if (err) {
                     res.writeHead(500);
                 }
-                else if (!rows.length) {
+                else if (rows.length == 0) {
+                    res.writeHead(500);
+                }
+                else {
                     var template =
                         "<div class=\"user-pic\">"+
                         "       <img id=\"prof-pic\" src=\"\"/>"+
@@ -47,14 +48,14 @@ profile.prototype.render = function(req, res) {
                         "</script>";
                     var view = {
                         username: rows[0].username,
-                        username: rows[0].email
+                        email: rows[0].email
                     };
                     res.writeHead(200, {
                         "Content-Type": "text/html"
                     });
-                    res.write(Mustache.render(template, view));
-                    res.send();
+                    res.write(mustache.render(template, view));
                 }
+                res.send();
             });
     }
 };

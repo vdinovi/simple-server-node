@@ -20,7 +20,6 @@ var profile = new profile(dbConn, sessionMap);
 // - /profile GET(token) -> Render user profile
 // TODO:- /profile POST(token) -> Edit user profile?
 server.use('/profile', jsonParser, function(req, res, next) {
-    console.log(sessionMap);
     switch (req.path) {
     case '/':
         if (req.method == 'GET') profile.render(req, res, usrAuth);
@@ -38,7 +37,6 @@ server.use('/profile', jsonParser, function(req, res, next) {
 //  - /   GET(UID || username) -> retreive public user information 
 server.use('/user', jsonParser, function(req, res, next) {
     var info = req.body;
-    console.log(sessionMap);
     switch (req.path) {
     case '/':
         if (req.method == 'GET') usrAuth.getUser(req, res,
