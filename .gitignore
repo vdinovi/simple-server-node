@@ -1,6 +1,4 @@
 .*.swp
-.gitignore
-.elasticbeanstalk
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
