@@ -17,7 +17,7 @@ function getCookie(cname) {
 function init() {
     $.ajax({
         type: "GET",
-        url: "http://simpleserver.wmphqv5kpb.us-west-1.elasticbeanstalk.com/chat",
+        url: "http://simpleserver.wmphqv5kpb.us-west-1.elasticbeanstalk.com/validate",
         success: function() {
             // Connect
             var socket = io('http://simpleserver.wmphqv5kpb.us-west-1.elasticbeanstalk.com/');
@@ -39,7 +39,8 @@ function init() {
 
             return true;
         },
-        error: function() {
+        error: function(err) {
+            console.log(err)
             alert("Log in in order to use this service");
         }
     });
