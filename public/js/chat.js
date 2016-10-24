@@ -20,7 +20,7 @@ function init() {
         url: "http://simpleserver.wmphqv5kpb.us-west-1.elasticbeanstalk.com/chat",
         success: function() {
             // Connect
-            var socket = io('http://localhost:3030');
+            var socket = io('http://simpleserver.wmphqv5kpb.us-west-1.elasticbeanstalk.com/');
 
             // Handle message
             socket.on('message', function(msg) {
