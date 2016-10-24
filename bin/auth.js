@@ -42,8 +42,9 @@ auth.prototype.login = function(req, res, info) {
             else {
                 if (rows[0].password == info.password) {
                     var uid = rows[0].uid;
+                    var username = rows[0].username;
                     var token = crypto.randomBytes(20).toString('hex');
-                    self.sessionMap[token] = new session(token, uid);
+                    self.sessionMap[token] = new session(token, uid, username);
                     self.setExpire(token);
                     res.cookie('session', token);
                     res.writeHead(200, {

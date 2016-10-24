@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/vdinovi/simple-server-node#readme",
   "dependencies": {
+    "cookie": "^0.3.1",
+    "cookie-parser": "^1.4.3",
     "crypto": "0.0.3",
     "express": "^4.14.0",
     "mustache": "^2.2.1",

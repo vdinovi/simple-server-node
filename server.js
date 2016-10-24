@@ -1,30 +1,36 @@
+// Standard modules
 var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 
 // Custom modules
-var dbModule = require('./bin/db.js');
-var authModule = require('./bin/auth.js');
-var profileModule = require('./bin/profile.js');
-var chatModule = require('./bin/chat.js');
+var dbModule = require('./bin/db.js'); // MySQL Database wrapper
+var authModule = require('./bin/auth.js'); // User authorization
+var profileModule = require('./bin/profile.js'); // Profile renderer
+var chatModule = require('./bin/chat.js'); // Chat system using socket.io
 
-//Init
+// Server setup & config
 var app = express();
 var server = http.createServer(app);
+app.use(express.static('public')); // use public to server static files
+app.use(cookieParser()); // use cookie parser
+app.use(bodyParser.json()); // use json parser
 
-// Setup and config server
-app.use(express.static('public'));
-var jsonParser = bodyParser.json(); 
-var sessionMap = {};
-var db = new dbModule();
+// Globals
+var sessionMap = {}; // Map for user sessions
+
+// Module init
+var db = new dbModule(); 
 var auth = new authModule(db, sessionMap);
 var profile = new profileModule(db, sessionMap);
 var chat = new chatModule(server, sessionMap);
 
-// User Profile:
-// - /profile GET(token) -> Render user profile
-// TODO:- /profile POST(token) -> Edit user profile?
-app.use('/profile', jsonParser, function(req, res, next) {
+// ---------- Middleware ----------
+// *** User Profile ***
+//  - /profile GET(token) -> Render user profile
+//  TODO:- /profile POST(token) -> Edit user profile?
+app.use('/profile', function(req, res, next) {
     switch (req.path) {
     case '/':
         if (req.method == 'GET') profile.render(req, res, auth);
@@ -36,17 +42,11 @@ app.use('/profile', jsonParser, function(req, res, next) {
     }
 });
 
-// Chat Handler
-// '/' - GET -> User wishes to enter chat. 
-//              * Open a socket for user and send them current data
-/*app.use('/chat', jsonParser, function(req, res, next) {
-});*/
-
-// User Auth:
+// *** User Auth ***
 //  - /login  POST(username, password) -> Authenticate user
 //  - /signup POST(email, username, password, confirm-pass) -> Create new user
 //  - /   GET(UID || username) -> retreive public user information 
-app.use('/user', jsonParser, function(req, res, next) {
+app.use('/user', function(req, res, next) {
     var info = req.body;
     switch (req.path) {
     case '/':
@@ -66,4 +66,5 @@ app.use('/user', jsonParser, function(req, res, next) {
     }
 });
 
+// Bind to port 3030
 server.listen(3030);

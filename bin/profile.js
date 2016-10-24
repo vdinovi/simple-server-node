@@ -23,7 +23,7 @@ profile.prototype.validateToken = function(token, res) {
 };
 
 profile.prototype.render = function(req, res) {
-    var token = req.query.token;
+    var token = req.cookies.session;
     var session = null;
     if (session = this.validateToken(token, res)) {
         var str = "SELECT * FROM usr_auth WHERE uid = '"+session.uid+"';";

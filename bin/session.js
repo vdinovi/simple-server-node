@@ -1,7 +1,8 @@
-var session = function(sessionId, uid) {
+var session = function(sessionId, uid, username) {
+    this.expired = false;
     this.sessionId = sessionId;
     this.uid = uid;
-    this.expired = false;
+    this.username = username;
 }
 
 session.prototype.expire = function(session) {
