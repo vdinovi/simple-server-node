@@ -16,7 +16,7 @@ var mysql = require('mysql');
  * ******************************************************/
 
 const info = {
-    host: 'localhost',
+    host: 'http://simpleserver.wmphqv5kpb.us-west-1.elasticbeanstalk.com',
     user: 'simple',
     password: 'vd12345!',
     database: 'simpledb'

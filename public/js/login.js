@@ -23,7 +23,7 @@ $(document).ready(function() {
         };
         $.ajax({
             type: "POST",
-            url: "http://localhost:3030/user/login",
+            url: "http://simpleserver.wmphqv5kpb.us-west-1.elasticbeanstalk.com/user/login",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(info),
             success: function(data, status, xhr) {
@@ -46,7 +46,7 @@ $(document).ready(function() {
         };
         $.ajax({
             type: "POST",
-            url: "http://localhost:3030/user/signup",
+            url: "http://simpleserver.wmphqv5kpb.us-west-1.elasticbeanstalk.com/user/signup",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(info),
             success: function(data) {

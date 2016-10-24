@@ -8,7 +8,7 @@
             function renderProfile() {
                 $.ajax({
                     type: "GET",
-                    url: "http://localhost:3030/profile",
+                    url: "http://simpleserver.wmphqv5kpb.us-west-1.elasticbeanstalk.com/profile"
                     contentType: "text/html",
                     data: {token: document.cookie},
                     success: function(data, status, xhr) {
