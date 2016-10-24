@@ -17,7 +17,7 @@ function getCookie(cname) {
 function init() {
     $.ajax({
         type: "GET",
-        url: "http://simpleserver.wmphqv5kpb.us-west-1.elasticbeanstalk.com/validate",
+        url: "http://simpleserver.wmphqv5kpb.us-west-1.elasticbeanstalk.com/user/validate",
         success: function() {
             // Connect
             var socket = io('http://simpleserver.wmphqv5kpb.us-west-1.elasticbeanstalk.com/');
