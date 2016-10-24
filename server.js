@@ -53,6 +53,13 @@ app.use('/user', function(req, res, next) {
         if (req.method == 'GET') auth.getUser(req, res,
              {id: req.query.id, username: req.query.username});
         break;
+    case '/validate':
+        if (req.method == 'GET') {
+            if (auth.validateToken(req.cookies.session)) res.writeHead(200);
+            else res.writeHead(400);
+            res.send();
+        }
+        break;
     case '/login':
         if (req.method == 'POST') auth.login(req, res, info);
         break;

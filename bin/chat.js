@@ -16,7 +16,10 @@ var chat = function(server, sessionMap) {
         }
         // Broadcast any messages received
         socket.on('message', function(msg) {
-            io.emit('message', {data: msg.data});
+            io.emit('message', {
+                username: sessionMap[token].username,
+                data: msg.data
+            });
         });
     });
 

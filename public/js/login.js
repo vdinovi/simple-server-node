@@ -27,7 +27,7 @@ $(document).ready(function() {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(info),
             success: function(data, status, xhr) {
-                console.log(getCookie('session'));
+                alert('Successfully logged in as ' + data.username);
                 document.cookie = 'session='+getCookie("session");
             },
             error: function(err, status, xhr) {

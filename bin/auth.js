@@ -42,14 +42,16 @@ auth.prototype.login = function(req, res, info) {
             else {
                 if (rows[0].password == info.password) {
                     var uid = rows[0].uid;
-                    var username = rows[0].username;
+                    var name = rows[0].username;
+                    console.log("User '" + name + "' logged in");
                     var token = crypto.randomBytes(20).toString('hex');
-                    self.sessionMap[token] = new session(token, uid, username);
+                    self.sessionMap[token] = new session(token, uid, name);
                     self.setExpire(token);
                     res.cookie('session', token);
                     res.writeHead(200, {
-                        "Content-Type": "text/plain",
+                        "Content-Type": "application/json; charset=utf-8",
                     });
+                    res.write(JSON.stringify({username: name}));
                 }
                 else {
                     res.writeHead(400, "Invalid username or password");
