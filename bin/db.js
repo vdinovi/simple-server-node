@@ -16,7 +16,7 @@ var mysql = require('mysql');
  * ******************************************************/
 
 const info = {
-    host: 'aaqfnefyv531u0.chfwru12q1ji.us-west-1.rds.amazonaws.com',
+    host: 'localhost',
     user: 'simple',
     password: 'vd12345!',
     database: 'simpledb'

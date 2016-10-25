@@ -17,16 +17,27 @@ function getCookie(cname) {
 function init() {
     $.ajax({
         type: "GET",
-        url: "http://simpleserver.wmphqv5kpb.us-west-1.elasticbeanstalk.com/user/validate",
+        url: 'http://localhost:3030/user/validate',
         success: function() {
             // Connect
-            var socket = io('http://simpleserver.wmphqv5kpb.us-west-1.elasticbeanstalk.com/');
+            var socket = io('http://localhost:3030');
+
+            socket.on('history', function(msgs) {
+                var buf = "";
+                var length = msgs.length;
+                for (var i = 0; i < length; ++i) {
+                    buf += '\n' + msgs[i].username + ': ' + msgs[i].data;
+                } 
+                var cur = $("#chat-window-box");
+                cur.val(cur.val() + buf);
+                cur.scrollTop = cur.scrollHeight;
+            });
 
             // Handle message
             socket.on('message', function(msg) {
-                console.log(msg.data);
                 var cur = $("#chat-window-box");
                 cur.val(cur.val() + '\n' + msg.username + ': ' + msg.data);
+                cur.scrollTop = cur.scrollHeight;
             });
 
             // Send message
