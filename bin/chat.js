@@ -1,8 +1,9 @@
 var cookie = require('cookie');
 var ws = require('ws');
 
-var chat = function(server, sessionMap) {
+var chat = function(sessionMap) {
     sessionMap = sessionMap; // should probably include auth instead
+    //var msgBuf = require('./cpp/ringbuffer');
     var msgBuf = [];
     var clientList = [];
     var wss = new ws.Server({port: 3031});

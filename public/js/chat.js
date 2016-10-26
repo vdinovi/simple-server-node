@@ -12,7 +12,7 @@ function getCookie(cname) {
         }
     }
     return "";
-}
+};
 
 function init() {
     $.ajax({
@@ -25,7 +25,7 @@ function init() {
             sock.onmessage = function(msg) {
                 var cur = $("#chat-window-box");
                 var message = JSON.parse(msg.data);
-                cur.val(cur.val() + '\n' + message.user + ': ' + message.data);
+                cur.val(cur.val() + message.user + ': ' + message.data + '\n');
                 cur.scrollTop = cur.scrollHeight;
             }
 
