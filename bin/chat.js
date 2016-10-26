@@ -1,62 +1,36 @@
 var cookie = require('cookie');
-
-/*var RingBuffer = function() {
-    this.size = 10;
-    this.top = 0;
-    this.buf = new Array(10);
-};
-
-RingBuffer.prototype.push = function(val) {
-    if (this.top == this.size)
-        this.top = 0;
-    this.buf[this.top++] = val;
-}
-
-RingBuffer.prototype.read = function() {
-    var iter = this.top;
-    var rtn = [];
-    var count = this.size;
-    while (count--) {
-        if (iter == this.size) 
-            iter = 0;
-        if (this.buf[iter] == null)
-            break;
-        cconsole.log(this.buf[iter]);
-        rtn.push(this.buf[iter++]);
-    }
-    return rtn;
-}*/
+var ws = require('ws');
 
 var chat = function(server, sessionMap) {
     sessionMap = sessionMap; // should probably include auth instead
-    //var ringBuf = new RingBuffer();
-    var buf = [];
-    var clients = [];
+    var msgBuf = [];
+    var clientList = [];
+    var wss = new ws.Server({port: 3031});
 
-    io = require('socket.io').listen(server);
-    io.on('connection', function(socket) {
-        // Authenticate
-        var token = cookie.parse(socket.request.headers.cookie).session;
+    wss.on('connection', function(sock) {
+        var token = cookie.parse(sock.upgradeReq.headers.cookie).session;
         var session = sessionMap[token];
-        // Missing or expired token
         if (!session || session.expired) {
-            socket.disconnect()
+            sock.close(400, 'Invalid session token');
             return;
         }
-        clients[token] = {id: socket.id, sock: socket};
-        io.sockets.connected[socket.id].emit('history', buf); //ringBuf.read());
-        // Broadcast any messages received
-        socket.on('message', function(msg) {
-            var msgObj = {
-                username: sessionMap[token].username,
-                data: msg.data
-            };
-            //ringBuf.push(msgObj);
-            buf.push(msgObj);
-            io.emit('message', msgObj);
-        });
-    });
+        clientList[token] = {socket: sock, session: session};
+        for (var i = 0; i < msgBuf.length; ++i) {
+            sock.send(msgBuf[i]);
+        }
 
+        sock.on('message', function(msg) {
+            var message = {
+                user: clientList[token].session.username,
+                data: msg
+            };
+            msgBuf.push(JSON.stringify(message));
+            wss.clients.forEach(function(client) {
+                client.send(JSON.stringify(message));
+            });
+        });
+
+    });
 };
 
 module.exports = chat;
