@@ -1,4 +1,5 @@
 var mysql = require('mysql');
+const dbhost = "simpledb.chfwru12q1ji.us-west-1.rds.amazonaws.com";
 
 //  DATABASE SCHEMA
 /********************************************************
@@ -16,7 +17,7 @@ var mysql = require('mysql');
  * ******************************************************/
 
 const info = {
-    host: 'simpledb.chfwru12q1ji.us-west-1.rds.amazonaws.com',
+    host: dbhost,
     user: 'simple',
     password: 'vd12345!',
     database: 'simpledb'

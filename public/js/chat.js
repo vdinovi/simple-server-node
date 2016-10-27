@@ -1,3 +1,6 @@
+const host = "http://simple-server.wmphqv5kpb.us-west-1.elasticbeanstalk.com/";
+const wshost = "ws://simple-server.wmphqv5kpb.us-west-1.elasticbeanstalk.com/";
+
 // AJAX does not allow parsing of cookies (Why?)
 function getCookie(cname) {
     var name = cname + "=";
@@ -17,9 +20,9 @@ function getCookie(cname) {
 function init() {
     $.ajax({
         type: "GET",
-        url: 'http://simple-server.wmphqv5kpb.us-west-1.elasticbeanstalk.com/user/validate',
+        url: host + "user/validate",
         success: function() {
-            var sock = new WebSocket("ws://simple-server.wmphqv5kpb.us-west-1.elasticbeanstalk.com");
+            var sock = new WebSocket(wshost);
 
             // Handle message
             sock.onmessage = function(msg) {

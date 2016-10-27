@@ -1,3 +1,5 @@
+const host = "http://simple-server.wmphqv5kpb.us-west-1.elasticbeanstalk.com/";
+
 // AJAX does not allow parsing of cookies (Why?)
 function getCookie(cname) {
     var name = cname + "=";
