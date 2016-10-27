@@ -25,7 +25,7 @@ $(document).ready(function() {
         };
         $.ajax({
             type: "POST",
-            url: "http://simple-server.wmphqv5kpb.us-west-1.elasticbeanstalk.com/user/login",
+            url: host + "user/login";
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(info),
             success: function(data, status, xhr) {
@@ -48,7 +48,7 @@ $(document).ready(function() {
         };
         $.ajax({
             type: "POST",
-            url: "http://http://simple-server.wmphqv5kpb.us-west-1.elasticbeanstalk.com/user/signup",
+            url: host + "user/signup";
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(info),
             success: function(data) {
