@@ -1,6 +1,11 @@
 branch-defaults:
   aws:
     environment: simpleserver
+    group_suffix: null
+environment-defaults:
+  simpleserver:
+    branch: null
+    repository: null
 global:
   application_name: simpleserver
   branch: null
