@@ -2,12 +2,12 @@ var cookie = require('cookie');
 var ws = require('ws');
 const wshost = "ws://simpleserver.bfmpgunfdg.us-west-1.elasticbeanstalk.com/chat";
 
-var chat = function(sessionMap) {
+var chat = function(server, sessionMap) {
     sessionMap = sessionMap; // should probably include auth instead
     //var msgBuf = require('./cpp/ringbuffer');
     var msgBuf = [];
     var clientList = [];
-    var wss = new ws.Server({host: wshost});
+    var wss = new ws.Server({server: server});
 
     wss.on('connection', function(sock) {
         var token = cookie.parse(sock.upgradeReq.headers.cookie).session;
