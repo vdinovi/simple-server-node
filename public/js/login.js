@@ -25,7 +25,7 @@ $(document).ready(function() {
         };
         $.ajax({
             type: "POST",
-            url: host + "user/login";
+            url: host + "user/login",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(info),
             success: function(data, status, xhr) {
@@ -48,7 +48,7 @@ $(document).ready(function() {
         };
         $.ajax({
             type: "POST",
-            url: host + "user/signup";
+            url: host + "user/signup",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(info),
             success: function(data) {
