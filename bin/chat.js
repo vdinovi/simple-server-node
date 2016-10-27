@@ -1,5 +1,4 @@
 var cookie = require('cookie');
-var ws = require('ws');
 
 var chat = function(server, sessionMap) {
     sessionMap = sessionMap; // should probably include auth instead
