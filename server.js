@@ -73,4 +73,4 @@ app.use('/user', function(req, res, next) {
     }
 });
 
-server.listen(8081);
+server.listen(80);
