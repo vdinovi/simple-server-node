@@ -10,6 +10,9 @@ var chat = function(server, sessionMap) {
         server: server
     });
 
+    //wsserver.handleUpgrade(request, socket, upgradeHead, function() { 
+    //});
+
     wsserver.on('connection', function(sock) {
         var token = cookie.parse(sock.upgradeReq.headers.cookie).session;
         var session = sessionMap[token];
