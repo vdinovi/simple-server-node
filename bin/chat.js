@@ -6,7 +6,7 @@ var chat = function(sessionMap) {
     //var msgBuf = require('./cpp/ringbuffer');
     var msgBuf = [];
     var clientList = [];
-    var wss = new ws.Server({port: 8081});
+    var wss = new ws.Server({port: 80});
 
     wss.on('connection', function(sock) {
         var token = cookie.parse(sock.upgradeReq.headers.cookie).session;
