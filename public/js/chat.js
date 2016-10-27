@@ -19,7 +19,7 @@ function init() {
         type: "GET",
         url: 'http://simple-server.wmphqv5kpb.us-west-1.elasticbeanstalk.com/user/validate',
         success: function() {
-            var sock = new WebSocket("ws://simple-server.wmphqv5kpb.us-west-1.elasticbeanstalk.com:3031");
+            var sock = new WebSocket("ws://simple-server.wmphqv5kpb.us-west-1.elasticbeanstalk.com");
 
             // Handle message
             sock.onmessage = function(msg) {
