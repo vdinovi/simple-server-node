@@ -1,0 +1,12 @@
+branch-defaults:
+  aws:
+    environment: simpleserver
+global:
+  application_name: simpleserver
+  branch: null
+  default_ec2_keyname: vito
+  default_platform: Node.js
+  default_region: us-west-1
+  profile: eb-cli
+  repository: null
+  sc: git
