@@ -1,5 +1,5 @@
 const host = "http://simpleserver.bfmpgunfdg.us-west-1.elasticbeanstalk.com/";
-const wshost = "ws://simpleserver.bfmpgunfdg.us-west-1.elasticbeanstalk.com/socket";
+const wshost = "ws://simpleserver.bfmpgunfdg.us-west-1.elasticbeanstalk.com/socket/";
 
 
 // AJAX does not allow parsing of cookies (Why?)
