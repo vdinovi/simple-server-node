@@ -6,36 +6,25 @@ var chat = function(server, sessionMap) {
     //var msgBuf = require('./cpp/ringbuffer');
     var msgBuf = [];
     var clientList = [];
-    var wsserver = new ws.Server({
-        server: server
-    });
 
-    //wsserver.handleUpgrade(request, socket, upgradeHead, function() { 
-    //});
-
-    wsserver.on('connection', function(sock) {
-        var token = cookie.parse(sock.upgradeReq.headers.cookie).session;
+    io = require('socket.io').listen(server);
+    io.on('connection', function(socket) {
+        var token = cookie.parse(socket.request.headers.cookie).session;
         var session = sessionMap[token];
         if (!session || session.expired) {
-            sock.close(400, 'Invalid session token');
+            socket.disconnect()
             return;
         }
-        clientList[token] = {socket: sock, session: session};
-        for (var i = 0; i < msgBuf.length; ++i) {
-            sock.send(msgBuf[i]);
-        }
-
-        sock.on('message', function(msg) {
-            var message = {
-                user: clientList[token].session.username,
-                data: msg
+        clients[token] = {id: socket.id, sock: socket};
+        io.sockets.connected[socket.id].emit('history', buf);
+        socket.on('message', function(msg) {
+            var msgObj = {
+                username: sessionMap[token].username,
+                data: msg.data
             };
-            msgBuf.push(JSON.stringify(message));
-            wsserver.clients.forEach(function(client) {
-                client.send(JSON.stringify(message));
-            });
+            buf.push(msgObj);
+            io.emit('message', msgObj);
         });
-
     });
 };
 
