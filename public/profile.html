@@ -4,25 +4,8 @@
         <link rel="stylesheet" type="text/css" href="css/main.css"/>
         <link rel="stylesheet" type="text/css" href="css/profile.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script type="text/javascript">
-            function renderProfile() {
-                $.ajax({
-                    type: "GET",
-                    url: "http://simple-server.wmphqv5kpb.us-west-1.elasticbeanstalk.com/profile",
-                    contentType: "text/html",
-                    data: {token: document.cookie},
-                    success: function(data, status, xhr) {
-                        $("#target").html(data); 
-                    },
-                    error: function(err, status, xhr) {
-                        if (err.status == 400)
-                            alert("Bad token. Re-authenticate to resolve");
-                        else
-                            $("#target").html("Failure to load");
-                    }
-                });
-            }
-        </script>
+        <script type="text/javascript" src="js/profile.js">
+       </script>
     </head>
     <body onload="renderProfile()">
     <div class="title">
