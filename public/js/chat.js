@@ -1,5 +1,5 @@
-const host = "http://localhost:8081/";
-const wshost = "ws://localhost:8081/";
+const host = "http://localhost:3030/";
+const wshost = "ws://localhost:3030/";
 
 
 // AJAX does not allow parsing of cookies (Why?)
@@ -23,21 +23,21 @@ function init() {
         type: "GET",
         url: host + "user/validate",
         success: function() {
-            var sock = new WebSocket(wshost);
+            var sock = io(wshost);
 
             // Handle message
-            sock.onmessage = function(msg) {
+            sock.on('message', function(message) {
                 var cur = $("#chat-window-box");
-                var message = JSON.parse(msg.data);
-                cur.val(cur.val() + message.user + ': ' + message.data + '\n');
+                cur.val(cur.val() + message.username + ': ' + message.data + '\n');
                 cur.scrollTop = cur.scrollHeight;
-            }
+            });
 
             // Send message
             $("#input-form").submit(function(e) {
                 e.preventDefault();
                 var box = $("#input-text");
-                sock.send(box.val());
+                if (box.val() != "" && box.val().length < 50);
+                    sock.send(box.val());
                 box.val('');
             });
 
@@ -49,8 +49,9 @@ function init() {
         }
     });
 
-}
+};
 
 $(document).ready(function() {
     init();
 });
+

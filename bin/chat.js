@@ -1,12 +1,11 @@
 var cookie = require('cookie');
 
 var chat = function(server, sessionMap) {
-    sessionMap = sessionMap; // should probably include auth instead
-    //var msgBuf = require('./cpp/ringbuffer');
+    sessionMap = sessionMap;
     var msgBuf = [];
-    var clientList = [];
+    var clients = [];
 
-    io = require('socket.io').listen(server);
+    io = require('socket.io')(server);
     io.on('connection', function(socket) {
         var token = cookie.parse(socket.request.headers.cookie).session;
         var session = sessionMap[token];
@@ -14,15 +13,27 @@ var chat = function(server, sessionMap) {
             socket.disconnect()
             return;
         }
-        clients[token] = {id: socket.id, sock: socket};
-        io.sockets.connected[socket.id].emit('history', buf);
+        clients[token] = {
+            id: socket.id,
+            username: sessionMap[token].username,
+        };
+        var newClient = io.sockets.connected[socket.id];
+        for (var i = 0; i < msgBuf.length; ++i) {
+            newClient.emit('message', msgBuf[i]);
+        }
+        console.log(clients[token].username + " connected to chat");
         socket.on('message', function(msg) {
-            var msgObj = {
-                username: sessionMap[token].username,
-                data: msg.data
+            var message = {
+                username: clients[token].username,
+                data: msg
             };
-            buf.push(msgObj);
-            io.emit('message', msgObj);
+            msgBuf.push(message);
+            io.emit('message', message);
+        });
+
+        socket.on('disconnect', function() {
+            console.log(clients[token].username + " disconnected from chat");
+            delete clients[token];
         });
     });
 };

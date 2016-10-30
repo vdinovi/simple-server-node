@@ -20,6 +20,7 @@ app.use(bodyParser.json()); // use json parser
 // Globals
 var sessionMap = {}; // Map for user sessions
 
+
 // Module init
 var db = new dbModule(); 
 var auth = new authModule(db, sessionMap);
@@ -73,4 +74,4 @@ app.use('/user', function(req, res, next) {
     }
 });
 
-server.listen(8081);
+server.listen(3030);

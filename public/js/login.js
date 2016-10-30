@@ -1,4 +1,4 @@
-const host = "http://localhost:8081/";
+const host = "http://localhost:3030/";
 
 // AJAX does not allow parsing of cookies (Why?)
 function getCookie(cname) {
