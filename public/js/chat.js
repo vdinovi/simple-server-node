@@ -1,5 +1,5 @@
-const host = "http://localhost:3030/";
-const wshost = "ws://localhost:3030/";
+const host = "http://localhost:8081/";
+const wshost = "ws://localhost:8081/";
 
 
 // AJAX does not allow parsing of cookies (Why?)
