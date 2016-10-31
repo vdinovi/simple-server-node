@@ -69,7 +69,7 @@ app.use('/user', function(req, res, next) {
     case '/signup':
         if (req.method == 'POST') auth.addUser(req, res, info);
         break;
-    case 'update':
+    case '/update':
         if (req.method == 'POST') user.profilePic(req, res);
     default:
         res.writeHead(400);

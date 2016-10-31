@@ -18,3 +18,22 @@ function renderProfile() {
     });
 }
 
+function updateProfilePic() {
+    var data = new FormData();
+    $.each($('#file')[0].files, function(i, file) {
+        data.append('file-'+i, file);
+    });
+    $.ajax({
+        type: "POST",
+        url: host + update,
+        data: data,
+        success: function(data) {
+            console.log(data);
+        },
+        error: function(err) {
+            console.log(err);
+        };
+    });
+
+};
+
