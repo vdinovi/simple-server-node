@@ -1,5 +1,6 @@
 var crypto = require('crypto');
 var session = require('./session.js');
+var fs = require('fs');
 
 var auth = function(db, sessionMap) {
     this.db = db;
@@ -75,6 +76,7 @@ auth.prototype.addUser = function(req, res, info) {
     var md5hash = crypto.createHash('md5');
     md5hash.update(info.username);
     var uid = md5hash.digest('hex').substr(0, 10);
+    var self = this;
     this.db.query("INSERT INTO usr_auth VALUES('"
             + info.username + "', '"
             + info.email + "', '"
@@ -92,11 +94,18 @@ auth.prototype.addUser = function(req, res, info) {
                     }
                 }
                 else {
-                    res.writeHead(200, "Account created for "+info.username);
-                    console.log('Successfully added user: '+info.username);
+                    if (self.initUser(info, uid))  {
+                        res.writeHead(200, "Account created for "+info.username); 
+                        console.log('Successfully added user: '+info.username);
+                    }
+                    else {
+                        // TODO: Remove user from db
+                        res.writeHead(500, "Account creation failed");
+                        console.log('Failed to init: '+info.username);
+                    }
                 }
                 res.send();
-            });
+            });   
 };
 
 // Retreive user by UID or username
@@ -130,6 +139,16 @@ auth.prototype.getUser = function(req, res, info) {
             }
             res.send();
         });
+};
+
+auth.prototype.initUser = function(info, uid) {
+    //TODO: Create entry in user info table indexed by UID
+    try {
+        fs.mkdirSync("users/"+uid);
+    } catch(e) {
+        return false;
+    }
+    return true;
 };
 
 module.exports = auth;

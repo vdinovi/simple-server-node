@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 // Custom modules
 var dbModule = require('./bin/db.js'); // MySQL Database wrapper
 var authModule = require('./bin/auth.js'); // User authorization
+var userModule = require('./bin/user.js'); // User action handler
 var profileModule = require('./bin/profile.js'); // Profile renderer
 var chatModule = require('./bin/chat.js'); // Chat system using socket.io
 
@@ -24,6 +25,7 @@ var sessionMap = {}; // Map for user sessions
 // Module init
 var db = new dbModule(); 
 var auth = new authModule(db, sessionMap);
+var user = new userModule(auth, sessionMap);
 var profile = new profileModule(db, sessionMap);
 var chat = new chatModule(server, sessionMap);
 
