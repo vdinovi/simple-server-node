@@ -23,6 +23,7 @@
     "cookie-parser": "^1.4.3",
     "crypto": "0.0.3",
     "express": "^4.14.0",
+    "multiparty": "^4.1.2",
     "mustache": "^2.2.1",
     "mysql": "^2.11.1",
     "socket.io": "^1.5.1"
