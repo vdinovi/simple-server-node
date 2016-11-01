@@ -36,10 +36,10 @@ profile.prototype.render = function(req, res) {
                 }
                 else {
                     var template =
-                    "<div class=\"user-pic\">"+
+                    "<div class=\"user-pic\"/>"+
                     "<img id=\"prof-pic\" src=\"/user/file?file=prof.jpg\""+
-                    " onerror=\"this.src=img/index.png\"/>"+
-                    "</div><div class=\"primary-info\">"+
+                    "onerror=\"this.src='img/index.png'\"/>"+
+                    "</div><div class=\"primary-info\"/>"+
                     "<p>Username: {{username}}</p>"+
                     "<p>Email: {{email}}</p>"+
                     "</div>";

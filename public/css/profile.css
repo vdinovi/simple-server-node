@@ -16,6 +16,7 @@
     border-radius: 3px;
     background: #eee;
     vertical-align: top;
+    background-image: url('img/index.png');
 }
 
 #prof-pic {
