@@ -14,7 +14,7 @@ var chatModule = require('./bin/chat.js'); // Chat system using socket.io
 // Server setup & config
 var app = express();
 var server = http.createServer(app);
-app.use(express.static('public')); // use public to server static files
+//app.use(express.static('public')); // use public to server static files
 app.use(cookieParser()); // use cookie parser
 app.use(bodyParser.json()); // use json parser
 
