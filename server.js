@@ -3,6 +3,7 @@ var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var fs = require('fs');
 
 // Custom modules
 var dbModule = require('./bin/db.js'); // MySQL Database wrapper
@@ -21,6 +22,9 @@ app.use(bodyParser.json()); // use json parser
 // Globals
 var sessionMap = {}; // Map for user sessions
 
+// File init
+if (!fs.existsSync(__dirname + '/users'))
+    fs.mkdirSync(__dirname + '/users');
 
 // Module init
 var db = new dbModule(); 
