@@ -1,4 +1,4 @@
-const host = "http://localhost:8081/";
+const host = "http://http://simpleserver.bfmpgunfdg.us-west-1.elasticbeanstalk.com/";
 
 function renderProfile() {
     $.ajax({
