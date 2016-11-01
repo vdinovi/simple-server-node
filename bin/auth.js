@@ -7,11 +7,11 @@ var auth = function(db, sessionMap) {
     this.sessionMap = sessionMap;
 };
 
-// Set 5 minute expire time for any session created
+// Set 10 minute expire time for any session created
 auth.prototype.setExpire = function(token) {
     var session = this.sessionMap[token];
     if (session) 
-        setTimeout(session.expire, 300000, session);
+        setTimeout(session.expire, 600000, session);
 };
 
 // Resolve token to session

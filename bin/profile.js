@@ -36,14 +36,13 @@ profile.prototype.render = function(req, res) {
                 }
                 else {
                     var template =
-                        "<div class=\"user-pic\">"+
-                        "       <img id=\"prof-pic\" src=\"user/file?file=prof.jpg\"/>"+
-                        "    </div>"+
-                        "    <div class=\"primary-info\">"+
-                        "        <p>Username: {{username}}</p>"+
-                        "        <p>Email: {{email}}</p>"+
-                        "    </div>"+
-                        "</script>";
+                    "<div class=\"user-pic\">"+
+                    "<img id=\"prof-pic\" src=\"/user/file?file=prof.jpg\""+
+                    " onerror=\"this.src=img/index.png\"/>"+
+                    "</div><div class=\"primary-info\">"+
+                    "<p>Username: {{username}}</p>"+
+                    "<p>Email: {{email}}</p>"+
+                    "</div>";
                     var view = {
                         username: rows[0].username,
                         email: rows[0].email
