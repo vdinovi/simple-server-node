@@ -18,9 +18,10 @@ auth.prototype.setExpire = function(token) {
 // - If session has not expired, server may operate on assocaited UID
 auth.prototype.validateToken = function(token) {
     var session = this.sessionMap[token];
-    if (session && !session.expired) {
+    if (!session)
+        return false;
+    if (!session.expired)
         return session;
-    }
     return false;
 };
 

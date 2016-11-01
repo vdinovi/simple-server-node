@@ -1,50 +1,50 @@
 var cookie = require('cookie');
-var multiparty = require('multiparty')
+var busboy = require('busboy');
 var util = require('util');
 
-var user = function(auth) {
+var user = function(auth, sessionMap) {
     this.auth = auth; 
+    this.sessionMap = sessionMap;
 };
 
 user.prototype.resolve = function(req) {
-    return auth.validateToken(cookie.parse(req.headers.cookie));
+    return this.auth.validateToken(cookie.parse(req.headers.cookie).session);
 };
 
-user.prototype.parseFile = function(req, res, callback) {
-    var form = new multiparty.form();
-    form.on('error', function(err) {
-        console.log('Error parsing form: ' + err.stack);
-    });
-    form.on('part', function(part) {
-        callback(name, file);
-    }); 
-};
-
-user.prototype.profilePic = function(req, res) {
-    var session;
-    if (!(session = this.resolve(req))) {
-        res.write(400, "Bad session token");
+user.prototype.upload = function(req, res) {
+    var session = this.resolve(req);
+    if (!session) {
+        res.writeHead(400, "Missing or expired session token");
         res.send();
+        return;
     }
-    var path = "users/" + session.uid;
-    this.parseFile(req, res, function(name, file) {
-        if (!name.includes(".jpg")) {
-            res.writeHead(400, "Bad filetype");
-        }
-        else {
-            fs.writeFile(path + "/profile.jpg", file, (err) => {
-                if (err) {
-                    console.log(err);
-                    res.write(500, "Failed to write file");
-                }
-                else {
-                    console.log("Profile pic updated for: " + session.username);
-                    res.write(200, "Profile pic updated");
-                }
-            });
-        }
-        res.send();
+    var path = "users/" + session.uid + '/';
+    var busboy = new Busboy({
+        headers: req.headers
     });
-};
+    busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+        var outfile = fs.createWriteStream(path + filename, {mode: 0o666});
+        outfile.on('open', function() {
+            console.log('opening ' + filename + ' for writing');
+        });
+        file.on('data', function(data) {
+            console.log('writing: ' + data);
+            outfile.write(data);
+        });
+        file.on('end', function() {
+            console.log('finished writing ' + filename);
+            outfile.end();
+        });
+    });
+    busboy.on('finish', function() {
+        res.writeHead(303, { Connection: 'close'});
+        res.end();
+
+    });
+    req.pipe(busboy);
+};    
+        
+
+
 
 module.exports = user;

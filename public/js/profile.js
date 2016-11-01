@@ -18,21 +18,21 @@ function renderProfile() {
     });
 }
 
-function updateProfilePic() {
+function upload() {
     var data = new FormData();
-    $.each($('#file')[0].files, function(i, file) {
-        data.append('file-'+i, file);
-    });
     $.ajax({
         type: "POST",
-        url: host + update,
-        data: data,
+        url: host + 'user/update',
+        data: file,
+        cache: false,
+        contentType: false,
+        processData: false,
         success: function(data) {
             console.log(data);
         },
         error: function(err) {
             console.log(err);
-        };
+        }
     });
 
 };
