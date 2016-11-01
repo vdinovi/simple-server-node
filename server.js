@@ -25,7 +25,7 @@ var sessionMap = {}; // Map for user sessions
 // Module init
 var db = new dbModule(); 
 var auth = new authModule(db, sessionMap);
-var user = new userModule(auth, sessionMap);
+var user = new userModule(auth, sessionMap, __dirname);
 var profile = new profileModule(db, sessionMap);
 var chat = new chatModule(server, sessionMap);
 
@@ -71,6 +71,9 @@ app.use('/user', function(req, res, next) {
         break;
     case '/upload':
         if (req.method == 'POST') user.upload(req, res);
+        break;
+    case '/file':
+        if (req.method == 'GET') user.getFile(req, res);
         break;
     default:
         res.writeHead(400, "Bad endpoint");

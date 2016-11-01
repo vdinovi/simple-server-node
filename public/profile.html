@@ -41,7 +41,10 @@
     <div id="target" class="user-pane">
         <p>Loading...</p>
     </div>
-    <input type="file" id="file" size="50" onchange="updateProfilePic()">
+    <form id="upload-form" enctype="multipart/form-data">
+    <label for="file">Upload files: </label>
+    <input type="file" id="file" size="100" onchange="upload()">
+    </form>
     <div class="footer">
     </div>
     </body>

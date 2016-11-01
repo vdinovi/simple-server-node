@@ -19,12 +19,13 @@ function renderProfile() {
 }
 
 function upload() {
-    var data = new FormData();
+    var formData = new FormData($('#upload-form')[0]);
+    formData.append('img', $('input[type=file]')[0].files[0], 'prof.jpg');
+
     $.ajax({
         type: "POST",
-        url: host + 'user/update',
-        data: file,
-        cache: false,
+        url: host + 'user/upload',
+        data: formData,
         contentType: false,
         processData: false,
         success: function(data) {
@@ -34,6 +35,4 @@ function upload() {
             console.log(err);
         }
     });
-
 };
-

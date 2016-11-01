@@ -1,4 +1,3 @@
-var fs = require('fs');
 var mustache = require('mustache');
 
 var profile = function(db, sessionMap) {
@@ -38,7 +37,7 @@ profile.prototype.render = function(req, res) {
                 else {
                     var template =
                         "<div class=\"user-pic\">"+
-                        "       <img id=\"prof-pic\" src=\"\"/>"+
+                        "       <img id=\"prof-pic\" src=\"user/file?file=prof.jpg\"/>"+
                         "    </div>"+
                         "    <div class=\"primary-info\">"+
                         "        <p>Username: {{username}}</p>"+
