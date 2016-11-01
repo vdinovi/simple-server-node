@@ -1,6 +1,7 @@
 .*.swp
-users
 users/*
+.ebextensions
+.elasticbeanstalk
 
 
 
