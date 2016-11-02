@@ -16,7 +16,16 @@
     border-radius: 3px;
     background: #eee;
     vertical-align: top;
-    background-image: url('img/index.png');
+}
+
+#upload-form {
+    margin: 10px;
+    border: 1px solid black;
+    width: 400px;
+}
+
+.confirm-upload {
+    display: inline-block;
 }
 
 #prof-pic {
@@ -38,7 +47,4 @@ p.primary-info {
     display:inline-block;
 }
 
-table {
-    
 
-}
