@@ -1,5 +1,5 @@
 var mysql = require('mysql');
-const dbhost = "localhost";
+const dbhost = "http://simpleserver.bfmpgunfdg.us-west-1.elasticbeanstalk.com/"; 
 
 //  DATABASE SCHEMA
 /********************************************************
