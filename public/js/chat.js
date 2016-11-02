@@ -29,19 +29,23 @@ function init() {
             sock.on('message', function(message) {
                 var cur = $("#chat-window-box");
                 cur.val(cur.val() + message.username + ': ' + message.data + '\n');
+                // TODO: Why isn't this working??
                 cur.scrollTop = cur.scrollHeight;
+            });
+
+            // Handle clientList
+            sock.on('clientList', function(clients) {
+                $("#online-users-box").val(clients);
             });
 
             // Send message
             $("#input-form").submit(function(e) {
                 e.preventDefault();
                 var box = $("#input-text");
-                if (box.val() != "" && box.val().length < 50);
+                if (box.val() != "" && box.val().length < 50)
                     sock.send(box.val());
                 box.val('');
             });
-
-            return true;
         },
         error: function(err) {
             console.log(err)
