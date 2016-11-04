@@ -19,24 +19,22 @@ app.use(express.static('public')); // use public to server static files
 app.use(cookieParser()); // use cookie parser
 app.use(bodyParser.json()); // use json parser
 
-// Globals
-var sessionMap = {}; // Map for user sessions
-
-// File init
-if (!fs.existsSync(__dirname + '/users'))
-    fs.mkdirSync(__dirname + '/users');
+// Set globals
+var sessionMap = {}; // Session map; used for user session managment
+// Node's fs libary won't let you use relative paths backwards (unsafe lol)
+// This global is se in order to access the server root from the modules dir
+exports.serverRoot = __dirname;
 
 // Module init
 var db = new dbModule(); 
-var auth = new authModule(db, sessionMap);
-var user = new userModule(auth, sessionMap, __dirname);
+var userControl = new userModule(sessionMap);
+var auth = new authModule(db, sessionMap, userControl);
 var profile = new profileModule(db, sessionMap);
 var chat = new chatModule(server, sessionMap);
 
 // ---------- Middleware ----------
 // *** User Profile ***
 //  - /profile GET(token) -> Render user profile
-//  TODO:- /profile POST(token) -> Edit user profile?
 app.use('/profile', function(req, res, next) {
     switch (req.path) {
     case '/':
@@ -50,9 +48,12 @@ app.use('/profile', function(req, res, next) {
 });
 
 // *** User Auth ***
+//  - /  GET(UID) -> retreive user information
 //  - /login  POST(username, password) -> Authenticate user
-//  - /signup POST(email, username, password, confirm-pass) -> Create new user
-//  - /   GET(UID || username) -> retreive public user information 
+//  - /signup  POST(email, username, password, confirm-pass) -> Create new user
+//  - /validate  GET(session) -> validate user session
+//  - /file  POST(file) -> upload file to user dir
+//  - /file  GET(filename) -> retreive file from user dir
 app.use('/user', function(req, res, next) {
     var info = req.body;
     switch (req.path) {
@@ -73,11 +74,9 @@ app.use('/user', function(req, res, next) {
     case '/signup':
         if (req.method == 'POST') auth.addUser(req, res, info);
         break;
-    case '/upload':
-        if (req.method == 'POST') user.upload(req, res);
-        break;
     case '/file':
-        if (req.method == 'GET') user.getFile(req, res);
+        if (req.method == 'POST') userControl.upload(req, res);
+        if (req.method == 'GET') userControl.getFile(req, res);
         break;
     default:
         res.writeHead(400, "Bad endpoint");

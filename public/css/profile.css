@@ -18,6 +18,16 @@
     vertical-align: top;
 }
 
+#upload-form {
+    margin: 10px;
+    border: 1px solid black;
+    width: 400px;
+}
+
+.confirm-upload {
+    display: inline-block;
+}
+
 #prof-pic {
     width: 100%;
     height: 100%;
@@ -37,7 +47,4 @@ p.primary-info {
     display:inline-block;
 }
 
-table {
-    
 
-}

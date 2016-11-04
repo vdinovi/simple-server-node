@@ -1,4 +1,4 @@
-const host = "http://simpleserver.bfmpgunfdg.us-west-1.elasticbeanstalk.com/";
+const host = "http://localhost:8081/"
 
 function renderProfile() {
     $.ajax({
@@ -24,7 +24,7 @@ function upload() {
 
     $.ajax({
         type: "POST",
-        url: host + 'user/upload',
+        url: host + 'user/file',
         data: formData,
         contentType: false,
         processData: false,

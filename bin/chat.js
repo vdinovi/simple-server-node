@@ -18,9 +18,8 @@ var chat = function(server, sessionMap) {
             username: sessionMap[token].username,
         };
         var newClient = io.sockets.connected[socket.id];
-        for (var i = 0; i < msgBuf.length; ++i) {
-            newClient.emit('message', msgBuf[i]);
-        }
+        emitMessageHistory(newClient, msgBuf);
+        emitClientList(clients);
         console.log(clients[token].username + " connected to chat");
         socket.on('message', function(msg) {
             var message = {
@@ -32,10 +31,27 @@ var chat = function(server, sessionMap) {
         });
 
         socket.on('disconnect', function() {
-            console.log(clients[token].username + " disconnected from chat");
-            delete clients[token];
+            if (clients[token]) {
+                console.log(clients[token].username + " disconnected from chat");
+                delete clients[token];
+                emitClientList(clients);
+            }
         });
     });
+};
+
+function emitMessageHistory(client, msgBuf) {
+    for (var i = 0; i < msgBuf.length; ++i) {
+        client.emit('message', msgBuf[i]);
+    }
+};
+
+
+function emitClientList(clients) {
+    var connectedClients = ""; 
+    for (var key in clients)
+        connectedClients += clients[key].username+"\n";
+    io.emit('clientList', connectedClients);
 };
 
 module.exports = chat;

@@ -1,4 +1,4 @@
-const host = "http://simpleserver.bfmpgunfdg.us-west-1.elasticbeanstalk.com/";
+const host = "http://localhost:8081/"
 
 // AJAX does not allow parsing of cookies (Why?)
 function getCookie(cname) {
@@ -32,8 +32,10 @@ $(document).ready(function() {
                 alert('Successfully logged in as ' + data.username);
                 document.cookie = 'session='+getCookie("session");
             },
-            error: function(err, status, xhr) {
-                console.log(err);
+            error: function(err) {
+                alert(err.statusText);
+                if (err.status != '400')
+                    console.log(err.statusText);
             }
         });
     });
@@ -55,8 +57,10 @@ $(document).ready(function() {
                 alert("Account created");
                 console.log(data);
             },
-            error: function(data) {
-                console.log(data);
+            error: function(err) {
+                alert(err.statusText);
+                if (err.status != '400') 
+                    console.log(err.statusText);
             }
         });
     });

@@ -3,18 +3,27 @@ var fs = require('fs');
 var Busboy = require('busboy');
 var util = require('util');
 
-var user = function(auth, sessionMap, serverroot) {
-    this.auth = auth; 
+var user = function(sessionMap) {
+    // Initialize user root
+    this.serverRoot = require('../server.js').serverRoot;
+    this.userDir = this.serverRoot + '/users/';
+    if (!fs.existsSync(this.userDir))
+        fs.mkdirSync(this.userDir);
     this.sessionMap = sessionMap;
-    this.userdir = serverroot + '/users/';
 };
 
-user.prototype.resolve = function(req) {
-    return this.auth.validateToken(cookie.parse(req.headers.cookie).session);
+user.prototype.validateToken = function(req) {
+    var token = cookie.parse(req.headers.cookie).session;
+    var session = this.sessionMap[token];
+    if (!session)
+        return false;
+    if (!session.expired)
+        return session;
+    return false;
 };
 
 user.prototype.upload = function(req, res) {
-    var session = this.resolve(req);
+    var session = this.validateToken(req);
     if (!session) {
         res.writeHead(400, "Missing or expired session token");
         res.send();
@@ -39,15 +48,38 @@ user.prototype.upload = function(req, res) {
 };    
 
 user.prototype.getFile = function (req, res) {
-    var session = this.resolve(req);
+    var session = this.validateToken(req);
     if (!session) {
         res.writeHead(400, "Missing or expired session token");
         res.send();
         return;
     }
-    res.sendFile(this.userdir + session.uid + '/' + req.query.file);
+    var path = this.userDir + session.uid + '/' + req.query.file;
+    if (fs.existsSync(path))
+        res.sendFile(path);
+    else 
+        res.sendFile(this.serverRoot + '/public/img/index.png');
 };    
 
+user.prototype.initializeUser = function(info, uid) {
+    //TODO: Create entry in user info table indexed by UID
+    return this.makeUserDir(uid); // Create user dir
+};
 
+user.prototype.userDirExists = function(uid) {
+    if (fs.existsSync(this.userDir + uid))
+        return  true;
+    return false; 
+};
+
+user.prototype.makeUserDir = function(uid) {
+    try {
+        fs.mkdirSync(this.userDir + uid);
+    } catch(e) {
+        console.log(e);
+        return false;
+    }
+    return true;
+}
 
 module.exports = user;

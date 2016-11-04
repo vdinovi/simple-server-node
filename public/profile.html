@@ -42,8 +42,9 @@
         <p>Loading...</p>
     </div>
     <form id="upload-form" enctype="multipart/form-data">
-    <label for="file">Upload files: </label>
-    <input type="file" id="file" size="100" onchange="upload()">
+        <label for="file">Upload files: </label>
+        <input type="file" id="file" style="width: 200px" onchange="upload()">
+        <button id="confirm-upload" onlick="upload()">Upload</button>
     </form>
     <div class="footer">
     </div>
