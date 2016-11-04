@@ -21,9 +21,10 @@ app.use(bodyParser.json()); // use json parser
 
 // Set globals
 var sessionMap = {}; // Session map; used for user session managment
+// Node's fs libary won't let you use relative paths backwards (unsafe lol)
+// This global is se in order to access the server root from the modules dir
 exports.serverRoot = __dirname;
 
-// Initialize user directory
 // Module init
 var db = new dbModule(); 
 var userControl = new userModule(sessionMap);
