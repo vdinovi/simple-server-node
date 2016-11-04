@@ -24,7 +24,7 @@ function upload() {
 
     $.ajax({
         type: "POST",
-        url: host + 'user/upload',
+        url: host + 'user/file',
         data: formData,
         contentType: false,
         processData: false,

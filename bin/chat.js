@@ -31,9 +31,11 @@ var chat = function(server, sessionMap) {
         });
 
         socket.on('disconnect', function() {
-            console.log(clients[token].username + " disconnected from chat");
-            delete clients[token];
-            emitClientList(clients);
+            if (clients[token]) {
+                console.log(clients[token].username + " disconnected from chat");
+                delete clients[token];
+                emitClientList(clients);
+            }
         });
     });
 };
@@ -47,6 +49,7 @@ function emitMessageHistory(client, msgBuf) {
 
 function emitClientList(clients) {
     var connectedClients = "";
+    
     for (var i = 0; i < clients.length; ++i) {
         connectedClients += clients[i].username+"\n";
     }   

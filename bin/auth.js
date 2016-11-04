@@ -2,9 +2,10 @@ var crypto = require('crypto');
 var session = require('./session.js');
 var fs = require('fs');
 
-var auth = function(db, sessionMap) {
+var auth = function(db, sessionMap, userControl) {
     this.db = db;
     this.sessionMap = sessionMap;
+    this.userControl = userControl;
 };
 
 // Set 10 minute expire time for any session created
@@ -47,6 +48,8 @@ auth.prototype.login = function(req, res, info) {
                     var name = rows[0].username;
                     console.log("User '" + name + "' logged in");
                     var token = crypto.randomBytes(20).toString('hex');
+                    if (!self.userControl.userDirExists(uid)) 
+                        self.userControl.makeUserDir(uid);
                     self.sessionMap[token] = new session(token, uid, name);
                     self.setExpire(token);
                     res.cookie('session', token);
@@ -95,7 +98,7 @@ auth.prototype.addUser = function(req, res, info) {
                     }
                 }
                 else {
-                    if (self.initUser(info, uid))  {
+                    if (self.userControl.initializeUser(info, uid))  {
                         res.writeHead(200, "Account created for "+info.username); 
                         console.log('Successfully added user: '+info.username);
                     }
@@ -140,16 +143,6 @@ auth.prototype.getUser = function(req, res, info) {
             }
             res.send();
         });
-};
-
-auth.prototype.initUser = function(info, uid) {
-    //TODO: Create entry in user info table indexed by UID
-    try {
-        fs.mkdirSync("users/"+uid);
-    } catch(e) {
-        return false;
-    }
-    return true;
 };
 
 module.exports = auth;
