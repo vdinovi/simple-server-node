@@ -48,11 +48,9 @@ function emitMessageHistory(client, msgBuf) {
 
 
 function emitClientList(clients) {
-    var connectedClients = "";
-    
-    for (var i = 0; i < clients.length; ++i) {
-        connectedClients += clients[i].username+"\n";
-    }   
+    var connectedClients = ""; 
+    for (var key in clients)
+        connectedClients += clients[key].username+"\n";
     io.emit('clientList', connectedClients);
 };
 
